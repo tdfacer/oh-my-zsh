@@ -12,7 +12,7 @@ function web_search() {
     duckduckgo  "https://www.duckduckgo.com/?q="
     startpage   "https://www.startpage.com/do/search?q="
     yandex      "https://yandex.ru/yandsearch?text="
-    github      "https://github.com/search?q="
+    github      "https://github.com/ifit/"
     baidu       "https://www.baidu.com/s?wd="
     ecosia      "https://www.ecosia.org/search?q="
   )
