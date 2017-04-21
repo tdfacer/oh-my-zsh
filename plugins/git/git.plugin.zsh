@@ -34,20 +34,34 @@ function work_in_progress() {
 }
 
 #FROM BASH vvv
+alias gaa="git add ."
+# see script for gac: adds/commits and writes message for $1
 alias gb="git branch"
 alias gc="git checkout $1"
 alias gc-="git checkout -"
 alias gd="git diff"
+alias gdh="git diff HEAD~1"
 alias gfa='git fetch --all'
 alias gdn="git diff --name-only"
 alias gl="git log"
 alias gll="git log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n'' %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all"
 
 alias gs="git status"
+#alias g212="git checkout 2.1.2"
+alias g22="git checkout 2.2.0"
+alias g221="git checkout 2.2.1"
+#alias gs212="git checkout wolf-2.1.2"
+alias gs22="git checkout wolf-2.2.0"
+alias gs221="git checkout wolf-2.1.2"
 alias gcb="git checkout -b $1"
 alias gcm="git checkout master"
 alias gcd="git checkout dev"
 alias gits='git status'
+alias gpo2="git pull origin 2.0.1"
+alias gp21="git pull origin 2.1.0"
+alias gp211="git pull origin 2.1.1"
+alias gp212="git pull origin 2.1.2"
+alias gps212="git pull origin wolf-2.1.2"
 alias gpom="git pull origin master"
 alias gpod="git pull origin dev"
 alias gpo="git pull origin $1"
@@ -55,13 +69,16 @@ alias gpu="git push origin $1"
 alias gitsu="git submodule update --init --recursive"
 alias gitb="git branch"
 alias gm="git mergetool"
-alias grc="git rebase --continue"
-alias grs="git rebase --skip"
 alias gra="git rebase --abort"
+alias grc="git rebase --continue"
+alias grh="git reset --hard"
+alias grs="git rebase --skip"
 #alias gss="git stash save"
-alias gss="git stash show -p stash@{$1}"
+alias gsa="git stash apply stash@{`$1`}"
+alias gss="git stash show -p stash@{$"$1"}"
 alias gsl="git stash list"
 alias gsp="git stash pop"
+alias gtl='cd $(git rev-parse --show-toplevel || echo ".")' # go to top level
 alias gpro="git pull --rebase origin $1"
 #FROM BASH ^^^
 
@@ -238,7 +255,6 @@ compdef _git gpoat=git-push
 #alias grmv='git remote rename'
 #alias grrm='git remote remove'
 #alias grset='git remote set-url'
-#alias grt='cd $(git rev-parse --show-toplevel || echo ".")'
 #alias gru='git reset --'
 #alias grup='git remote update'
 #alias grv='git remote -v'
