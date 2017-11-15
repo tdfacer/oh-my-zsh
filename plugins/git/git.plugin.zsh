@@ -37,6 +37,7 @@ function work_in_progress() {
 alias gaa="git add ."
 # see script for gac: adds/commits and writes message for $1
 alias gb="git branch"
+alias gbs="git branch --sort=-committerdate"
 alias gc="git checkout $1"
 alias gc-="git checkout -"
 alias gd="git diff"
@@ -50,9 +51,17 @@ alias gs="git status"
 #alias g212="git checkout 2.1.2"
 alias g22="git checkout 2.2.0"
 alias g221="git checkout 2.2.1"
+alias g223="git checkout 2.2.3"
+alias g224="git checkout 2.2.4"
+alias g225="git checkout 2.2.5"
+alias g224h="git checkout 2.2.4-bike-hotfix"
 #alias gs212="git checkout wolf-2.1.2"
 alias gs22="git checkout wolf-2.2.0"
-alias gs221="git checkout wolf-2.1.2"
+alias gs221="git checkout wolf-2.2.1"
+alias gs223="git checkout wolf-2.2.3"
+alias gs224="git checkout wolf-2.2.4"
+alias gs225="git checkout wolf-2.2.5"
+alias gs224h="git checkout wolf-2.2.4-bike-hotfix"
 alias gcb="git checkout -b $1"
 alias gcm="git checkout master"
 alias gcd="git checkout dev"
@@ -67,6 +76,7 @@ alias gpod="git pull origin dev"
 alias gpo="git pull origin $1"
 alias gpu="git push origin $1"
 alias gitsu="git submodule update --init --recursive"
+alias gpitsu="git pull; git submodule update --init --recursive"
 alias gitb="git branch"
 alias gm="git mergetool"
 alias gra="git rebase --abort"
@@ -80,7 +90,39 @@ alias gsl="git stash list"
 alias gsp="git stash pop"
 alias gtl='cd $(git rev-parse --show-toplevel || echo ".")' # go to top level
 alias gpro="git pull --rebase origin $1"
-#FROM BASH ^^^
+
+function shire () {
+    echo "changing to shire"
+    cd ${PWD%/wolf*}/wolf/shire
+    echo "changed to shire"
+    pwd
+}
+
+function wolf () {
+    echo "changing to wolf"
+    cd ${PWD%/wolf*}/wolf
+    echo "changed to wolf"
+    pwd
+}
+
+function resetall () {
+    shire
+    if [ -d Analytics.Xamarin ]; then
+            echo Analytics.Xamarin exists
+            cd Analytics.Xamarin
+            echo resetting Analytics.Xamarin
+            git reset --hard
+    fi
+    wolf
+    if [ -d ModernHttpClient ]; then
+            echo  ModernHttpClient exists
+            cd ModernHttpClient
+            echo resetting ModernHttpClient
+            git reset --hard
+    fi
+    wolf
+    echo "done"
+}
 
 #
 # Aliases
