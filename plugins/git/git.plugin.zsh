@@ -33,6 +33,36 @@ function work_in_progress() {
   fi
 }
 
+function gds () {
+        CUR_DIR="$(pwd)"
+        echo; echo; echo "Wolf:"
+        wolf
+        git status
+        echo; echo "-------------------------------------------"; echo; echo
+        echo; echo "Shire:"
+        shire
+        git status
+        cd $CUR_DIR
+        echo; echo; echo
+}
+
+function gap () {
+    git add -p
+    if [ $? -ne 0 ]; then
+            echo "Didn't complete \`git add -p\`; exiting."
+            exit 0
+    fi
+    echo "Enter commit message (remember to hit enter after last line; ctrl+c then ctrl+d to exit):"
+    MESSAGE=$(</dev/stdin)
+    git commit -m "$MESSAGE"
+    if [ $? -eq 0 ]; then
+        echo Success!
+    else
+        echo FAIL
+    fi
+    echo \
+}
+
 #FROM BASH vvv
 alias gaa="git add ."
 # see script for gac: adds/commits and writes message for $1
@@ -41,6 +71,7 @@ alias gbs="git branch --sort=-committerdate"
 alias gc="git checkout $1"
 alias gc-="git checkout -"
 alias gd="git diff"
+alias gdl="git diff --unified=10" # show more lines (10) around diffs to provide deeper context
 alias gdh="git diff HEAD~1"
 alias gfa='git fetch --all'
 alias gdn="git diff --name-only"
@@ -54,14 +85,22 @@ alias g221="git checkout 2.2.1"
 alias g223="git checkout 2.2.3"
 alias g224="git checkout 2.2.4"
 alias g225="git checkout 2.2.5"
+alias g226="git checkout 2.2.6"
 alias g224h="git checkout 2.2.4-bike-hotfix"
+alias g230="git checkout 2.3.0-phone"
+alias g240="git checkout 2.4.0-rower || (git fetch --all && git checkout 2.4.0-rower)"
+alias g231="git checkout 2.3.1"
 #alias gs212="git checkout wolf-2.1.2"
 alias gs22="git checkout wolf-2.2.0"
 alias gs221="git checkout wolf-2.2.1"
 alias gs223="git checkout wolf-2.2.3"
 alias gs224="git checkout wolf-2.2.4"
 alias gs225="git checkout wolf-2.2.5"
+alias gs226="git checkout wolf-2.2.6"
 alias gs224h="git checkout wolf-2.2.4-bike-hotfix"
+alias gs230="git checkout wolf-2.3.0"
+alias gs231="git checkout wolf-2.3.1"
+alias gs240="git checkout wolf-2.4.0 || (git fetch --all && git checkout wolf-2.4.0)"
 alias gcb="git checkout -b $1"
 alias gcm="git checkout master"
 alias gcd="git checkout dev"
@@ -84,7 +123,7 @@ alias grc="git rebase --continue"
 alias grh="git reset --hard"
 alias grs="git rebase --skip"
 #alias gss="git stash save"
-alias gsa="git stash apply stash@{`$1`}"
+#alias gsa="git stash apply stash@{`$1`}"
 alias gss="git stash show -p stash@{$"$1"}"
 alias gsl="git stash list"
 alias gsp="git stash pop"
@@ -105,24 +144,63 @@ function wolf () {
     pwd
 }
 
-function resetall () {
+function reset_it () {
+        if [ $# -lt 1 ]; then
+                echo "reset_it: too few arguments"
+                exit 1
+        fi
+        THE_DIR=$1
+        cd $THE_DIR
+        echo "`pwd` exists"
+        git reset --hard
+}
+
+function reset_all () {
+    CUR_DIR="$(pwd)"
     shire
     if [ -d Analytics.Xamarin ]; then
-            echo Analytics.Xamarin exists
-            cd Analytics.Xamarin
-            echo resetting Analytics.Xamarin
-            git reset --hard
+            reset_it Analytics.Xamarin
+    fi
+    shire
+    if [ -d ModernHttpClient ]; then
+            reset_it ModernHttpClient
+    fi
+    wolf
+    if [ -d Analytics.Xamarin ]; then
+            reset_it Analytics.Xamarin
     fi
     wolf
     if [ -d ModernHttpClient ]; then
-            echo  ModernHttpClient exists
-            cd ModernHttpClient
-            echo resetting ModernHttpClient
-            git reset --hard
+            reset_it ModernHttpClient
     fi
-    wolf
+    cd $CUR_DIR
     echo "done"
 }
+
+#function resetall () {
+#    shire
+#    if [ -d Analytics.Xamarin ]; then
+#            echo Analytics.Xamarin exists
+#            cd Analytics.Xamarin
+#            echo resetting Analytics.Xamarin
+#            git reset --hard
+#    fi
+#    if [ -d ModernHttpClient ]; then
+#            echo  ModernHttpClient exists
+#            cd ModernHttpClient
+#            echo resetting ModernHttpClient
+#            git reset --hard
+#    fi
+#    wolf
+#    if [ -d ModernHttpClient ]; then
+#            echo  ModernHttpClient exists
+#            cd ModernHttpClient
+#            echo resetting ModernHttpClient
+#            git reset --hard
+#    fi
+#    wolf
+#    echo "done"
+#}
 
 #
 # Aliases
