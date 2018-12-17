@@ -70,6 +70,7 @@ alias gb="git branch"
 alias gbs="git branch --sort=-committerdate"
 alias gc="git checkout $1"
 alias gc-="git checkout -"
+alias gct-="git checkout trevor"
 alias gd="git diff"
 alias gdl="git diff --unified=10" # show more lines (10) around diffs to provide deeper context
 alias gdh="git diff HEAD~1"
@@ -111,12 +112,15 @@ alias gp21="git pull origin 2.1.0"
 alias gp211="git pull origin 2.1.1"
 alias gp212="git pull origin 2.1.2"
 alias gps212="git pull origin wolf-2.1.2"
-alias gpom="git pull origin master"
 alias gpod="git pull origin dev"
+alias gpom="git pull origin master"
+alias gpot="git pull origin trevor"
 alias gpo="git pull origin $1"
 alias gpu="git push origin $1"
+alias gput="git push origin trevor"
 alias gitsu="git submodule update --init --recursive"
 alias gpitsu="git pull; git submodule update --init --recursive"
+alias gptisu="git pull; git submodule update --init --recursive"
 alias gitb="git branch"
 alias gm="git mergetool"
 alias gra="git rebase --abort"
@@ -130,6 +134,12 @@ alias gsl="git stash list"
 alias gsp="git stash pop"
 alias gtl='cd $(git rev-parse --show-toplevel || echo ".")' # go to top level
 alias gpro="git pull --rebase origin $1"
+
+function strev {
+  if git pull origin trevor; then
+    git push origin trevor
+  fi
+}
 
 function shire () {
     echo "changing to shire"

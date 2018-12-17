@@ -2,11 +2,11 @@
 
 local return_status="%{$fg[red]%}%(?..⏎)%{$reset_color%}"
 
-#local host_color="green"
 local host_color="red"
-#if [ -n "$SSH_CLIENT" ]; then
-#  local host_color="red"
-#fi
+if [ -n "$SSH_CLIENT" ]; then
+  local host_color="green"
+  #local host_color="red"
+fi
 
 PROMPT='
 %{$fg_bold[grey]%}[%{$reset_color%}%{$fg_bold[${host_color}]%}%n@%m%{$reset_color%}%{$fg_bold[grey]%}]%{$reset_color%} %{$fg_bold[blue]%}%10c%{$reset_color%} $(git_prompt_info) $(git_remote_status)
